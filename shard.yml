@@ -1,0 +1,11 @@
+name: pug
+version: 0.1.0
+
+authors:
+  - Julien Portalier <julien@portalier.com>
+
+targets:
+  pug:
+    main: src/cli.cr
+
+license: Apache-2.0

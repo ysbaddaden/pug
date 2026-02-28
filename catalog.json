@@ -1,0 +1,58 @@
+[
+  {
+    "name": "actionlint",
+    "urls": {
+      "linux": "https://github.com/rhysd/actionlint/releases/download/v$VERSION/actionlint_$VERSION_linux_$GOARCH.tar.gz",
+      "macos": "https://github.com/rhysd/actionlint/releases/download/v$VERSION/actionlint_$VERSION_darwin_$GOARCH.tar.gz",
+      "win32": "https://github.com/rhysd/actionlint/releases/download/v$VERSION/actionlint_$VERSION_windows_$GOARCH.zip"
+    }
+  },
+  {
+    "name": "ameba",
+    "urls": {
+      "linux": "https://github.com/ysbaddaden/ameba/releases/download/v$VERSION/ameba-v$VERSION-$ARCH-linux-musl.tar.gz",
+      "macos": "https://github.com/ysbaddaden/ameba/releases/download/v$VERSION/ameba-v$VERSION-$ARCH-darwin.tar.gz",
+      "win32": "https://github.com/ysbaddaden/ameba/releases/download/v$VERSION/ameba-v$VERSION-$ARCH-windows-msvc.zip"
+    }
+  },
+  {
+    "name": "prek",
+    "urls": {
+      "linux": "https://github.com/j178/prek/releases/download/v$VERSION/prek-$ARCH-unknown-linux-musl.tar.gz",
+      "macos": "https://github.com/j178/prek/releases/download/v$VERSION/prek-$ARCH-apple-darwin.tar.gz",
+      "win32": "https://github.com/j178/prek/releases/download/v$VERSION/prek-$ARCH-pc-windows-msvc.zip"
+    }
+  },
+  {
+    "name": "rumdl",
+    "urls": {
+      "linux": "https://github.com/rvben/rumdl/releases/download/v$VERSION/rumdl-v$VERSION-$ARCH-unknown-linux-musl.tar.gz",
+      "macos": "https://github.com/rvben/rumdl/releases/download/v$VERSION/rumdl-v$VERSION-$ARCH-apple-darwin.tar.gz",
+      "win32": "https://github.com/rvben/rumdl/releases/download/v$VERSION/rumdl-v$VERSION-$ARCH-pc-windows-msvc.zip"
+    }
+  },
+  {
+    "name": "shellcheck",
+    "urls": {
+      "linux": "https://github.com/koalaman/shellcheck/releases/download/v$VERSION/shellcheck-v$VERSION.linux.$ARCH.tar.gz",
+      "macos": "https://github.com/koalaman/shellcheck/releases/download/v$VERSION/shellcheck-v$VERSION.darwin.$ARCH.tar.gz",
+      "win32": "https://github.com/koalaman/shellcheck/releases/download/v$VERSION/shellcheck-v$VERSION.linux.$ARCH.tar.gz"
+    }
+  },
+  {
+    "name": "typos",
+    "urls": {
+      "linux": "https://github.com/crate-ci/typos/releases/download/v$VERSION/typos-v$VERSION-$ARCH-unknown-linux-musl.tar.gz",
+      "macos": "https://github.com/crate-ci/typos/releases/download/v$VERSION/typos-v$VERSION-$ARCH-apple-darwin.tar.gz",
+      "win32": "https://github.com/crate-ci/typos/releases/download/v$VERSION/typos-v$VERSION-$ARCH-pc-windows-msvc.zip"
+    }
+  },
+  {
+    "name": "zizmor",
+    "urls": {
+      "linux": "https://github.com/zizmorcore/zizmor/releases/download/v$VERSION/zizmor-$ARCH-unknown-linux-gnu.tar.gz",
+      "macos": "https://github.com/zizmorcore/zizmor/releases/download/v$VERSION/zizmor-$ARCH-apple-darwin.tar.gz",
+      "win32": "https://github.com/zizmorcore/zizmor/releases/download/v$VERSION/zizmor-$ARCH-pc-windows-msvc.tar.gz"
+    }
+  }
+]
