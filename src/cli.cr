@@ -1,8 +1,7 @@
 require "./pug"
 
 pug = Pug.new(Pug::FILENAME)
-pug.load_catalog(File.join(File.dirname(PROGRAM_NAME), "..", "catalog.json"))
-# TODO: append custom catalogs
+pug.load_catalog(File.join(File.dirname(Process.executable_path.not_nil!), "..", "catalog.json"))
 
 case ARGV[0]?
 when "install"
@@ -21,6 +20,9 @@ when "run"
 when "shell"
   pug.install_command
   pug.shell_command
+#when "export"
+#  TODO: export (power)shell script to install dependencies & run a command
+#  pug.export_command(ARGV[1]? || "sh")
 when "env"
   {% if flag?(:win32) %}
     print "$env:PATH="

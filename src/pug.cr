@@ -15,6 +15,7 @@ class Pug
 
   def initialize(@packages : Array(Package))
     @catalog = Catalog.new
+    @system = System.new
   end
 
   def load_catalog(path)
@@ -25,7 +26,7 @@ class Pug
     paths = [] of String
 
     @packages.each do |pkg|
-      installdir = File.join(BINDIR, "#{pkg.name}-#{pkg.version}")
+      installdir = File.join(@system.bindir, "#{pkg.name}-#{pkg.version}")
       next unless Dir.exists?(installdir)
 
       executable_name = {% if flag?(:win32) %} "#{pkg.name}.exe" {% else %} pkg.name {% end %}
@@ -42,65 +43,40 @@ class Pug
       paths << path
     end
 
-    paths.join({% if flag?(:win32) %} ';' {% else %} ':' {% end %})
+    paths.join(@system.env_path_separator)
   end
-
-  ## COMMANDS
 
   def install_command
     @packages.each do |pkg|
-      installdir = File.join(BINDIR, "#{pkg.name}-#{pkg.version}")
+      installdir = File.join(@system.bindir, "#{pkg.name}-#{pkg.version}")
       next if Dir.exists?(installdir)
 
       definition = @catalog.find(pkg.name)
       url = definition.url("x86_64", "linux", pkg.version)
 
-      command =
-        case url
-        when .ends_with?(".zip")
-          %(curl -sL #{url.inspect} | 7z x -si -o#{installdir.inspect})
-        when .ends_with?(".tar.gz")
-          %(curl -sL #{url.inspect} | tar zx -C #{installdir.inspect})
-        else
-          abort "fatal: unknown file extension #{File.basename(url)}"
-        end
+      Dir.mkdir_p(installdir)
 
-      mkdir installdir
-      invoke command, verbose: true
+      # basically: curl -sL $url | tar zx -C $installdir (without an extra shell)
+      STDERR.puts @system.shell_download_and_decompress(url, installdir)
+      download = Process.new(*@system.download(url), input: :close, output: :pipe, error: :inherit)
+      decompress = Process.new(*@system.decompress(url, installdir), input: download.output, output: :inherit, error: :inherit)
+      exit(1) unless download.wait.success? && decompress.wait.success?
     end
   end
 
   def run_command(argv)
-    Process.exec(SHELL, {"-c", Process.quote(argv)},
-                 input: Process::Redirect::Inherit,
-                 output: Process::Redirect::Inherit,
-                 error: Process::Redirect::Inherit,
+    Process.exec(*@system.shell_run(Process.quote(argv)),
+                 input: :inherit,
+                 output: :inherit,
+                 error: :inherit,
                  env: { "PATH" => env_path })
   end
 
   def shell_command
-    Process.exec(SHELL, INTERACTIVE_SHELL_ARGV,
-                 input: Process::Redirect::Inherit,
-                 output: Process::Redirect::Inherit,
-                 error: Process::Redirect::Inherit,
+    Process.exec(*@system.shell_interactive,
+                 input: :inherit,
+                 output: :inherit,
+                 error: :inherit,
                  env: { "PATH" => env_path })
-  end
-
-  private def invoke(command, verbose = false)
-    STDERR.puts command if verbose
-
-    status = Process.run(SHELL, {"-c", command},
-                         input: Process::Redirect::Close,
-                         output: Process::Redirect::Inherit,
-                         error: Process::Redirect::Inherit)
-    exit(1) unless status.success?
-  end
-
-  private def mkdir(path, verbose = false)
-    {% if flag?(:win32) %}
-      invoke %(New-Item -ItemType Directory -Path #{Process.quote(path)} -Force), verbose
-    {% else %}
-      invoke %(mkdir -p #{Process.quote(path)}), verbose
-    {% end %}
   end
 end
