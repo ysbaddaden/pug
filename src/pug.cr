@@ -57,10 +57,18 @@ class Pug
       Dir.mkdir_p(installdir)
 
       # basically: curl -sL $url | tar zx -C $installdir (without an extra shell)
-      STDERR.puts @system.shell_download_and_decompress(url, installdir)
-      download = Process.new(*@system.download(url), input: :close, output: :pipe, error: :inherit)
-      decompress = Process.new(*@system.decompress(url, installdir), input: download.output, output: :inherit, error: :inherit)
-      exit(1) unless download.wait.success? && decompress.wait.success?
+      if @system.compressed?(url)
+        STDERR.puts @system.shell_download_and_decompress(url, installdir)
+        download = Process.new(*@system.download(url), input: :close, output: :pipe, error: :inherit)
+        decompress = Process.new(*@system.decompress(url, installdir), input: download.output, output: :inherit, error: :inherit)
+        exit(1) unless download.wait.success? && decompress.wait.success?
+      else
+        filename = Path[installdir, pkg.name].to_s
+        STDERR.puts @system.shell_download(url, filename)
+        download = Process.new(*@system.download(url, filename), input: :close, output: :close, error: :inherit)
+        exit(1) unless download.wait.success?
+        {% if flag?(:unix) %} File.chmod(filename, 0o775) {% end %}
+      end
     end
   end
 

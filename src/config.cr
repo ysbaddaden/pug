@@ -56,6 +56,15 @@ class Pug
       end
     end
 
+    def compressed?(url)
+      url.ends_with?(".tar.gz") ||
+        url.ends_with?(".zip")
+    end
+
+    def shell_download(url, filename)
+      %(curl -sL #{Process.quote(url)} -o #{Process.quote(filename)})
+    end
+
     def shell_download_and_decompress(url, dir)
       case url
       when .ends_with?(".zip")
@@ -67,8 +76,12 @@ class Pug
       end
     end
 
-    def download(url)
-      {"curl", ["-sL", url]}
+    def download(url, filename = nil)
+      if filename
+        {"curl", ["-sL", url, "-o", filename]}
+      else
+        {"curl", ["-sL", url]}
+      end
     end
 
     def decompress(url, dir)
