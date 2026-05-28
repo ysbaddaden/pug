@@ -16,6 +16,14 @@
     }
   },
   {
+    "name": "circleci",
+    "urls": {
+      "linux": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.34770/circleci-cli_0.1.34770_linux_$GOARCH.tar.gz",
+      "macos": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.34770/circleci-cli_0.1.34770_darwin_$GOARCH.tar.gz",
+      "win32": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.34770/circleci-cli_0.1.34770_windows_$GOARCH.tar.gz"
+    }
+  },
+  {
     "name": "prek",
     "urls": {
       "linux": "https://github.com/j178/prek/releases/download/v$VERSION/prek-$ARCH-unknown-linux-musl.tar.gz",
@@ -37,6 +45,14 @@
       "linux": "https://github.com/koalaman/shellcheck/releases/download/v$VERSION/shellcheck-v$VERSION.linux.$ARCH.tar.gz",
       "macos": "https://github.com/koalaman/shellcheck/releases/download/v$VERSION/shellcheck-v$VERSION.darwin.$ARCH.tar.gz",
       "win32": "https://github.com/koalaman/shellcheck/releases/download/v$VERSION/shellcheck-v$VERSION.linux.$ARCH.tar.gz"
+    }
+  },
+  {
+    "name": "shfmt",
+    "urls": {
+      "linux": "https://github.com/mvdan/sh/releases/download/v$VERSION/shfmt_v$VERSION_linux_$GOARCH",
+      "macos": "https://github.com/mvdan/sh/releases/download/v$VERSION/shfmt_v$VERSION_darwin_$GOARCH",
+      "win32": "https://github.com/mvdan/sh/releases/download/v$VERSION/shfmt_v$VERSION_windows_$GOARCH.exe"
     }
   },
   {
