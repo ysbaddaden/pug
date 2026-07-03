@@ -1,32 +1,31 @@
 # Pug
 
-A simple manager for install a list of software executables at specific
-versions.
+A lightweight tool for managing software executables at specific versions,
+ensuring reproducibility across operating systems.
 
-The project comes from the realization that most software developers today
-upload executables along their source code, for example as GitHub release
-assets. Modern languages make it easy to distribute software for the major
-operating systems (Go, Rust, Zig, ...).
+The idea stems from the fact that most developers today publish binaries
+alongside their source code – for example as GitHub release assets. Modern
+languages (Go, Rust, Zig, …) make it straightforward to distribute software for
+the major operating systems.
 
-It comes with many benefits:
+## Key benefits
 
-- No need to wait for your distribution to package a version, and no force
-  upgrade when you upgrade your system;
-- No need to pollute your system, Keep executable dependencies just like
-  runtime;
-- No need for Docker, Nix or devenv (they have their use, and their issues);
-- No need for a different package manager for every operating system (only
-  tested on Linux so far).
-- Reproducible installations, across operating systems!
+- No need to wait for your distribution to ship a new package, and you're not
+  forced to upgrade your whole system when you want a newer tool.
+- Keeps your system free of unnecessary global dependencies; each executable is
+  treated like a runtime.
+- Eliminates the need for Docker or Nix tool.
+- Works on all major operating systems (only tested on Linux).
+- Reproducible installations across platforms.
 
 ## Usage
 
-Write a simple `pug.json` file (see below), then run `pug run <command>` or `pug
-shell`. That's it.
+Write a simple `pug.json` file (see the examples below), then run `pug run
+<command>` or `pug shell` to start an interactive shell. That's it.
 
 ## Catalog
 
-Downloads are defined in a catalog of URL patterns for Linux, macOS
+Downloads are defined in a catalog of URL templates for Linux, macOS
 and Windows. For example:
 
 ```json
@@ -52,8 +51,9 @@ and Windows. For example:
 
 ## Packages
 
-Installations are defined in a `pug.json` file listing the packages and the
-version to install. Each package will be looked up in the catalog. For example:
+Define the tools you want to install in a `pug.json` file, specifying the
+package name and the desired version. Each package is looked up in the catalog.
+For example:
 
 ```json
 [
@@ -66,32 +66,33 @@ Pug downloads each version into a cache, and tries to find a `<name>` (or
 `<name>.exe`) executable in the extracted archive, or the downloaded file to be
 the executable itself.
 
-Dependencies are automatically downloaded when needed. Pug manipulates `PATH`
-when calling commands so all the executables are available. You can execute `pug
-run <command> [arg, ...]` to run a command with all the other executables
-available, or `pug shell`.
+Pug downloads each specified version into a cache, extracts the archive (if
+necessary), and looks for an executable named `<name>` (or `<name>.exe`).
+Dependencies are fetched automatically when required. When you run `pug run
+<command> [args...]` or `pug shell`, Pug temporarily adjusts `PATH` so that all
+the installed executables are available.
 
-## Upgrade
+## Upgrades
 
-The `pug outdated` command lists packages that have a newer version available.
-It only works with GitHub release assets for now, and you must manually edit
-your `pug.json`.
+The `pug outdated` command lists packages that have a newer release available.
+It currently works only with GitHub release assets, so you need to edit
+`pug.json` manually to upgrade.
 
 ## Status
 
-Usable, though a little rough.
+Pug is usable, though still somewhat rough around the edges.
 
-The catalog is expected to be at `../catalog.json` relative to the executable
-for example. It should use `XDG` instead (or mac/win equivalent), and expect the
-catalog to be at `~/.local/share/pug/catalog.json`.
+- The catalog is expected to live in `../catalog.json` relative to the `pug`
+  binary, but a future iteration may use the XDG base directory (or an
+  OS‑specific equivalent) and place the catalog at
+  `~/.local/share/pug/catalog.json` instead.
 
-The provided catalog is also almost empty. I'm not sure whether Pug should have
-a general catalog. It would be nice, but also a lot of work to maintain...
+- The bundled catalog is sparse; a comprehensive catalog would be valuable but
+  would require significant maintenance.
 
-Pug could also install dependencies as defaults for your system. For example by
-linking the executables into `~/.local/bin/`. A simple `pug.json` could help
-setup your system with up-to-date, or legacy, software you use on a regular
-basis (not tied to a project).
+- Pug could also install executables globally, for example by linking them into
+  `~/.local/bin`. A minimal `pug.json` could therefore be used to set up a
+  system with up‑to‑date or legacy tools you rely on regularly.
 
 ## License
 
