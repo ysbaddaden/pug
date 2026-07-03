@@ -6,9 +6,8 @@ pug.load_catalog(File.join(File.dirname(Process.executable_path.not_nil!), "..",
 case ARGV[0]?
 when "install"
   pug.install_command
-#when "upgradeable"
-#  TODO: find latest version of a pkg (if possible)
-#  TODO: list outdated ones
+when "outdated"
+  pug.outdated_command
 #when "upgrade"
 #  TODO: find upgradeable pkgs
 #  TODO: update pug.json (unless up to date)
@@ -38,6 +37,7 @@ else
   puts
   puts "commands:"
   puts "   install   install packages defined in #{Pug::FILENAME}"
+  puts "   outdated  lists upgradable packages defined in #{Pug::FILENAME}"
   puts "   run       run a shell command with packages in PATH"
   puts "   shell     starts an interactive shell with packages in PATH"
   puts "   env       show PATH"

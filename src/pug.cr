@@ -1,6 +1,9 @@
 require "./config"
 require "./catalog"
 require "./package"
+require "http"
+require "openssl"
+require "semantic_version"
 
 class Pug
   def self.new(pug_path : String)
@@ -68,6 +71,28 @@ class Pug
         download = Process.new(*@system.download(url, filename), input: :close, output: :close, error: :inherit)
         exit(1) unless download.wait.success?
         {% if flag?(:unix) %} File.chmod(filename, 0o775) {% end %}
+      end
+    end
+  end
+
+  def outdated_command
+    headers = HTTP::Headers.new
+    if token = ENV["GITHUB_TOKEN"]? || Process.capture?(["gh", "auth", "token"]).try(&.chomp)
+      headers["Authorization"] = "Bearer #{token}"
+    end
+
+    @packages.each do |pkg|
+      definition = @catalog.find(pkg.name)
+      next unless definition.native_url("0.0.0") =~ %r{https://github.com/(.+?)/(.+?)/releases/(.*?)0\.0\.0}
+      owner, repo, prefix = $1, $2, $3
+
+      response = HTTP::Client.get("https://api.github.com/repos/#{owner}/#{repo}/releases/latest", headers: headers)
+      next unless response.status.ok?
+      next unless version = JSON.parse(response.body)["tag_name"].as_s?
+      version = version.lstrip(prefix) unless prefix.blank?
+
+      if SemanticVersion.parse(version) > SemanticVersion.parse(pkg.version)
+        print "- #{pkg.name} #{version} (installed #{pkg.version})\n"
       end
     end
   end
