@@ -21,6 +21,10 @@ class Pug
         .gsub("$GOARCH", goarch(arch))
     end
 
+    def native_url(version)
+      url(System.arch, System.name, version)
+    end
+
     private def goarch(arch)
       case arch
       when "aarch64"

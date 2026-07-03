@@ -52,7 +52,7 @@ class Pug
       next if Dir.exists?(installdir)
 
       definition = @catalog.find(pkg.name)
-      url = definition.url("x86_64", "linux", pkg.version)
+      url = definition.native_url(pkg.version)
 
       Dir.mkdir_p(installdir)
 

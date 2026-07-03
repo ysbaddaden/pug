@@ -2,6 +2,28 @@ class Pug
   FILENAME = "pug.json"
 
   class System
+    def self.arch
+      {% if flag?(:aarch64) %}
+        "aarch64"
+      {% elsif flag?(:x86_64) %}
+        "x86_64"
+      {% else %}
+        {% raise "fatal: unknown CPU architecture (fixme)" %}
+      {% end %}
+    end
+
+    def self.name
+      {% if flag?(:linux) %}
+        "linux"
+      {% elsif flag?(:darwin) %}
+        "macos"
+      {% elsif flag?(:win32) %}
+        "win32"
+      {% else %}
+        {% raise "fatal: unknown system (fixme)" %}
+      {% end %}
+    end
+
     enum Variant
       Powershell
       Shell
