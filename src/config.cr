@@ -1,5 +1,20 @@
+require "dirs"
+
 class Pug
   FILENAME = "pug.json"
+  CATALOG_FILENAME = "catalog.json"
+
+  def self.dirs
+    Dirs::Project.new("pug")
+  end
+
+  def self.catalog_path
+    if path = ENV["PUG_CATALOG"]?
+      Path[path]
+    else
+      Pug.dirs.data(CATALOG_FILENAME)
+    end
+  end
 
   class System
     def self.arch
@@ -42,13 +57,12 @@ class Pug
     def initialize(@variant : Variant)
     end
 
-    def bindir
-      case @variant
-      in Variant::Powershell
-        File.expand_path("~/AppData/Local/pug/cache", home: true)
-      in Variant::Shell
-        File.expand_path("~/.cache/pug", home: true)
-      end
+    def bindir(*subpath)
+      if path = ENV["PUG_BINDIR"]?
+        Path[path, *subpath]
+      else
+        Pug.dirs.cache(*subpath)
+      end.to_s
     end
 
     def env_path_separator

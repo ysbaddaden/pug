@@ -21,15 +21,19 @@ class Pug
     @system = System.new
   end
 
-  def load_catalog(path)
-    @catalog.load(path)
+  def load_catalog(path : Path)
+    if File.exists?(path)
+      @catalog.load(path)
+    else
+      abort "fatal: expected catalog at #{path}"
+    end
   end
 
   def env_path
     paths = [] of String
 
     @packages.each do |pkg|
-      installdir = File.join(@system.bindir, "#{pkg.name}-#{pkg.version}")
+      installdir = @system.bindir("#{pkg.name}-#{pkg.version}")
       next unless Dir.exists?(installdir)
 
       executable_name = {% if flag?(:win32) %} "#{pkg.name}.exe" {% else %} pkg.name {% end %}
@@ -51,7 +55,7 @@ class Pug
 
   def install_command
     @packages.each do |pkg|
-      installdir = File.join(@system.bindir, "#{pkg.name}-#{pkg.version}")
+      installdir = @system.bindir("#{pkg.name}-#{pkg.version}")
       next if Dir.exists?(installdir)
 
       definition = @catalog.find(pkg.name)

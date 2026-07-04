@@ -6,7 +6,7 @@ class Pug
       @definitions = [] of Definition
     end
 
-    def load(path : String)
+    def load(path : Path)
       File.open(path) do |file|
         @definitions += Array(Definition).from_json(file)
       end

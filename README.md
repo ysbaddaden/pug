@@ -82,17 +82,17 @@ It currently works only with GitHub release assets, so you need to edit
 
 Pug is usable, though still somewhat rough around the edges.
 
-- The catalog is expected to live in `../catalog.json` relative to the `pug`
-  binary, but a future iteration may use the XDG base directory (or an
-  OS‑specific equivalent) and place the catalog at
-  `~/.local/share/pug/catalog.json` instead.
+- The catalog must be manually created in the user's data directory:
+  - UNIX: `~/.local/share/pug/catalog.json`
+  - macOS: `~/Library/Application Support/pug/catalog.json`
+  - Windows: `~\AppData\Roaming\pug\catalog.json`
 
 - The bundled catalog is sparse; a comprehensive catalog would be valuable but
   would require significant maintenance.
 
 - Pug could also install executables globally, for example by linking them into
-  `~/.local/bin`. A minimal `pug.json` could therefore be used to set up a
-  system with up‑to‑date or legacy tools you rely on regularly.
+  `~/.local/bin` (UNIX only). A simple `pug.json` could therefore be used to set
+  up a system with up‑to‑date or legacy tools we rely on regularly.
 
 ## License
 

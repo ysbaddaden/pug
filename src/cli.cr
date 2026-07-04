@@ -1,7 +1,7 @@
 require "./pug"
 
 pug = Pug.new(Pug::FILENAME)
-pug.load_catalog(File.join(File.dirname(Process.executable_path.not_nil!), "..", "catalog.json"))
+pug.load_catalog(Pug.catalog_path)
 
 case ARGV[0]?
 when "install"
