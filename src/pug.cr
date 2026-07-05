@@ -1,6 +1,7 @@
 require "./config"
 require "./catalog"
 require "./package"
+require "./concurrently"
 require "http"
 require "openssl"
 require "semantic_version"
@@ -53,8 +54,9 @@ class Pug
     paths.join(@system.env_path_separator)
   end
 
+  # TODO: drop dependency on *curl*, *tar* and *zip* external executables
   def install_command
-    @packages.each do |pkg|
+    Concurrently.each(@packages) do |pkg|
       installdir = @system.bindir("#{pkg.name}-#{pkg.version}")
       next if Dir.exists?(installdir)
 
@@ -80,20 +82,14 @@ class Pug
   end
 
   def outdated_command
-    headers = HTTP::Headers.new
-    if token = ENV["GITHUB_TOKEN"]? || Process.capture?(["gh", "auth", "token"]).try(&.chomp)
-      headers["Authorization"] = "Bearer #{token}"
-    end
+    Concurrently.each(@packages) do |pkg|
+      next unless latest = @catalog.find(pkg.name).latest?
+      next unless pattern = latest.redirect?
 
-    @packages.each do |pkg|
-      definition = @catalog.find(pkg.name)
-      next unless definition.native_url("0.0.0") =~ %r{https://github.com/(.+?)/(.+?)/releases/(.*?)0\.0\.0}
-      owner, repo, prefix = $1, $2, $3
-
-      response = HTTP::Client.get("https://api.github.com/repos/#{owner}/#{repo}/releases/latest", headers: headers)
-      next unless response.status.ok?
-      next unless version = JSON.parse(response.body)["tag_name"].as_s?
-      version = version.lstrip(prefix) unless prefix.blank?
+      response = HTTP::Client.head(latest.url)
+      next unless response.status.redirection?
+      next unless response.headers["location"]? =~ Regex.new(Regex.escape(pattern).gsub("\\$VERSION", "(.*)"))
+      version = $1
 
       if SemanticVersion.parse(version) > SemanticVersion.parse(pkg.version)
         print "- #{pkg.name} #{version} (installed #{pkg.version})\n"

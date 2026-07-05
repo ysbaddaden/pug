@@ -1,5 +1,9 @@
 require "./pug"
 
+{% if Fiber.has_constant?(:ExecutionContext) %} %}
+  Fiber::ExecutionContext.default.resize(Fiber::ExecutionContext.default_workers_count)
+{% end %}
+
 pug = Pug.new(Pug::FILENAME)
 pug.load_catalog(Pug.catalog_path)
 

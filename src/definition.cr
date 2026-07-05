@@ -4,8 +4,16 @@ class Pug
   class Definition
     include JSON::Serializable
 
+    class Latest
+      include JSON::Serializable
+
+      getter url : String
+      getter? redirect : String?
+    end
+
     getter name : String
     getter urls : Hash(String, String)
+    getter? latest : Latest?
 
     # URL template variables:
     # - `$VERSION` — 1.2.3 or 4.5.6-alpha

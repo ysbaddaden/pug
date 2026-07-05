@@ -5,6 +5,10 @@
       "linux": "https://github.com/rhysd/actionlint/releases/download/v$VERSION/actionlint_$VERSION_linux_$GOARCH.tar.gz",
       "macos": "https://github.com/rhysd/actionlint/releases/download/v$VERSION/actionlint_$VERSION_darwin_$GOARCH.tar.gz",
       "win32": "https://github.com/rhysd/actionlint/releases/download/v$VERSION/actionlint_$VERSION_windows_$GOARCH.zip"
+    },
+    "latest": {
+      "url": "https://github.com/rhysd/actionlint/releases/latest",
+      "redirect": "https://github.com/rhysd/actionlint/releases/tag/v$VERSION"
     }
   },
   {
@@ -13,14 +17,22 @@
       "linux": "https://github.com/ysbaddaden/ameba/releases/download/v$VERSION/ameba-v$VERSION-$ARCH-linux-musl.tar.gz",
       "macos": "https://github.com/ysbaddaden/ameba/releases/download/v$VERSION/ameba-v$VERSION-$ARCH-darwin.tar.gz",
       "win32": "https://github.com/ysbaddaden/ameba/releases/download/v$VERSION/ameba-v$VERSION-$ARCH-windows-msvc.zip"
+    },
+    "latest": {
+      "url": "https://github.com/ysbaddaden/ameba/releases/latest",
+      "redirect": "https://github.com/ysbaddaden/ameba/releases/tag/v$VERSION"
     }
   },
   {
     "name": "circleci",
     "urls": {
-      "linux": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.34770/circleci-cli_0.1.34770_linux_$GOARCH.tar.gz",
-      "macos": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.34770/circleci-cli_0.1.34770_darwin_$GOARCH.tar.gz",
-      "win32": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v0.1.34770/circleci-cli_0.1.34770_windows_$GOARCH.tar.gz"
+      "linux": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v$VERSION/circleci-cli_$VERSION_linux_$GOARCH.tar.gz",
+      "macos": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v$VERSION/circleci-cli_$VERSION_darwin_$GOARCH.tar.gz",
+      "win32": "https://github.com/CircleCI-Public/circleci-cli/releases/download/v$VERSION/circleci-cli_$VERSION_windows_$GOARCH.tar.gz"
+    },
+    "latest": {
+      "url": "https://github.com/CircleCI-Public/circleci-ci/releases/latest",
+      "redirect": "https://github.com/CircleCI-Public/circleci-ci/releases/tag/v$VERSION"
     }
   },
   {
@@ -29,6 +41,10 @@
       "linux": "https://github.com/j178/prek/releases/download/v$VERSION/prek-$ARCH-unknown-linux-musl.tar.gz",
       "macos": "https://github.com/j178/prek/releases/download/v$VERSION/prek-$ARCH-apple-darwin.tar.gz",
       "win32": "https://github.com/j178/prek/releases/download/v$VERSION/prek-$ARCH-pc-windows-msvc.zip"
+    },
+    "latest": {
+      "url": "https://github.com/j178/prek/releases/latest",
+      "redirect": "https://github.com/j178/prek/releases/tag/v$VERSION"
     }
   },
   {
@@ -37,6 +53,10 @@
       "linux": "https://github.com/rvben/rumdl/releases/download/v$VERSION/rumdl-v$VERSION-$ARCH-unknown-linux-musl.tar.gz",
       "macos": "https://github.com/rvben/rumdl/releases/download/v$VERSION/rumdl-v$VERSION-$ARCH-apple-darwin.tar.gz",
       "win32": "https://github.com/rvben/rumdl/releases/download/v$VERSION/rumdl-v$VERSION-$ARCH-pc-windows-msvc.zip"
+    },
+    "latest": {
+      "url": "https://github.com/rvben/rumdl/releases/latest",
+      "redirect": "https://github.com/rvben/rumdl/releases/tag/v$VERSION"
     }
   },
   {
@@ -45,6 +65,10 @@
       "linux": "https://github.com/koalaman/shellcheck/releases/download/v$VERSION/shellcheck-v$VERSION.linux.$ARCH.tar.gz",
       "macos": "https://github.com/koalaman/shellcheck/releases/download/v$VERSION/shellcheck-v$VERSION.darwin.$ARCH.tar.gz",
       "win32": "https://github.com/koalaman/shellcheck/releases/download/v$VERSION/shellcheck-v$VERSION.linux.$ARCH.tar.gz"
+    },
+    "latest": {
+      "url": "https://github.com/koalaman/shellcheck/releases/latest",
+      "redirect": "https://github.com/koalaman/shellcheck/releases/tag/v$VERSION"
     }
   },
   {
@@ -53,6 +77,10 @@
       "linux": "https://github.com/mvdan/sh/releases/download/v$VERSION/shfmt_v$VERSION_linux_$GOARCH",
       "macos": "https://github.com/mvdan/sh/releases/download/v$VERSION/shfmt_v$VERSION_darwin_$GOARCH",
       "win32": "https://github.com/mvdan/sh/releases/download/v$VERSION/shfmt_v$VERSION_windows_$GOARCH.exe"
+    },
+    "latest": {
+      "url": "https://github.com/mvdan/sh/releases/latest",
+      "redirect": "https://github.commvdan/mvdan/sh/releases/tag/v$VERSION"
     }
   },
   {
@@ -61,6 +89,18 @@
       "linux": "https://github.com/crate-ci/typos/releases/download/v$VERSION/typos-v$VERSION-$ARCH-unknown-linux-musl.tar.gz",
       "macos": "https://github.com/crate-ci/typos/releases/download/v$VERSION/typos-v$VERSION-$ARCH-apple-darwin.tar.gz",
       "win32": "https://github.com/crate-ci/typos/releases/download/v$VERSION/typos-v$VERSION-$ARCH-pc-windows-msvc.zip"
+    },
+    "latest": {
+      "url": "https://github.com/crate-ci/typos/releases/latest",
+      "redirect": "https://github.com/crate-ci/typos/releases/tag/v$VERSION"
+    }
+  },
+  {
+    "name": "zig",
+    "urls": {
+      "linux": "https://ziglang.org/download/$VERSION/zig-$ARCH-linux-$VERSION.tar.xz",
+      "macos": "https://ziglang.org/download/$VERSION/zig-$ARCH-macos-$VERSION.tar.xz",
+      "win32": "https://ziglang.org/download/$VERSION/zig-$ARCH-windows-$VERSION.tar.xz"
     }
   },
   {
@@ -69,6 +109,10 @@
       "linux": "https://github.com/zizmorcore/zizmor/releases/download/v$VERSION/zizmor-$ARCH-unknown-linux-gnu.tar.gz",
       "macos": "https://github.com/zizmorcore/zizmor/releases/download/v$VERSION/zizmor-$ARCH-apple-darwin.tar.gz",
       "win32": "https://github.com/zizmorcore/zizmor/releases/download/v$VERSION/zizmor-$ARCH-pc-windows-msvc.tar.gz"
+    },
+    "latest": {
+      "url": "https://github.com/zizmorcore/zizmor/releases/latest",
+      "redirect": "https://github.com/zizmorcore/zizmor/releases/tag/v$VERSION"
     }
   }
 ]
